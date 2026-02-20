@@ -2,6 +2,8 @@
 
 describe('SauceDemo - Product Sort Dropdown', () => {
 
+const dropdown = '.product_sort_container';
+
   beforeEach(() => {
     // Visit the app and login first
     cy.visit('https://www.saucedemo.com/')
@@ -12,23 +14,25 @@ describe('SauceDemo - Product Sort Dropdown', () => {
   });
 
   it('TC_01 - Verify dropdown options and selection', () => {
-    // Check dropdown is visible
-    cy.get('.product_sort_container').should('be.visible')
+
+    // Make dropdown an alias for reuse
+    cy.get(dropdown).as('sortDropdown');
+    cy.get('@sortDropdown').should('be.visible');
 
     // Select "Name (A to Z)" and verify
-    cy.get('.product_sort_container').select('Name (A to Z)')
-      .should('have.value', 'az')
+    cy.get('@sortDropdown').select('Name (A to Z)');
+    cy.get(dropdown).should('have.value', 'az');
 
     // Select "Name (Z to A)" and verify
-    cy.get('.product_sort_container').select('Name (Z to A)')
-      .should('have.value', 'za')
+    cy.get('@sortDropdown').select('Name (Z to A)');
+    cy.get(dropdown).should('have.value', 'za');
 
     // Select "Price (low to high)" and verify
-    cy.get('.product_sort_container').select('Price (low to high)')
-      .should('have.value', 'lohi')
+    cy.get('@sortDropdown').select('Price (low to high)');
+    cy.get(dropdown).should('have.value', 'lohi');
 
     // Select "Price (high to low)" and verify
-    cy.get('.product_sort_container').select('Price (high to low)')
-      .should('have.value', 'hilo')
+    cy.get('@sortDropdown').select('Price (high to low)');
+    cy.get(dropdown).should('have.value', 'hilo');
   });
 });
